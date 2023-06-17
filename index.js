@@ -46,8 +46,48 @@ app.post('/task', async (req, res) => {
 })
 
 // GET /tasks
+app.get('/tasks', async (req, res) => {
+    const tasks = await Task.find();
+    res.json({
+        success: true,
+        message: 'All Tasks fetched Successfully',
+        data: tasks
+    })
+})
 
 // GET /task
+
+app.get('/task', async (req, res) => {
+    const taskId = req.query.taskId;
+
+    let task;
+    try {
+       task = await Task.findById({ taskId });
+
+    }
+    catch (e) {
+        return res.json({
+            success: false,
+            message: e.message,
+            data: []
+        });
+    }
+
+
+    if (!task) {
+        return res.json({
+            success: false,
+            message: 'Task not found',
+            data: []
+        });
+    }
+    res.json({
+        success: true,
+        message: 'task Successfully',
+        data: task
+    })
+
+})
 
 // DELET /task/delet
 
