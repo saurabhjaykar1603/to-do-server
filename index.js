@@ -62,7 +62,7 @@ app.get('/task', async (req, res) => {
 
     let task;
     try {
-       task = await Task.findById({ taskId });
+        task = await Task.findById({ taskId });
 
     }
     catch (e) {
@@ -89,7 +89,18 @@ app.get('/task', async (req, res) => {
 
 })
 
-// DELET /task/delet
+// POST /task/delet
+app.post("/task/delete", async (req, res) => {
+    const { taskId } = req.body;
+    await Task.deletOne({
+        _id: taskId
+    })
+    
+    res.json({
+        success: true,
+        message: "Task Successfully fetched"
+    })
+})
 
 // PUT /task
 
