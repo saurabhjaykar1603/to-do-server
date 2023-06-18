@@ -95,7 +95,7 @@ app.post("/task/delete", async (req, res) => {
     await Task.deletOne({
         _id: taskId
     })
-    
+
     res.json({
         success: true,
         message: "Task Successfully fetched"
@@ -103,6 +103,17 @@ app.post("/task/delete", async (req, res) => {
 })
 
 // PUT /task
+app.put("/task", async (req, res) => {
+    const { taskId, tital, description } = req.body;
+    const task = await Task.updateOne({ _id: taskId }, {
+        $set: { tital: tital, description: description }
+    })
+    res.json({
+        success:true,
+        message:"Task Successfully Updated"
+    })
+
+});
 
 
 const PORT = process.env.PORT || 5000;
